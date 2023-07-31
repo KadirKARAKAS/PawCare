@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 class TopBarWidget extends StatelessWidget {
-  const TopBarWidget({super.key, required this.titleText});
+  const TopBarWidget(
+      {super.key, required this.titleText, required this.appbarIcon});
   final String titleText;
+  final IconData appbarIcon;
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -13,8 +15,8 @@ class TopBarWidget extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: InkWell(
                 onTap: () => Navigator.pop(context),
-                child: const Icon(
-                  Icons.arrow_back,
+                child: Icon(
+                  appbarIcon,
                   size: 30,
                 ),
               )),

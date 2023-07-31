@@ -40,12 +40,13 @@ dependencies:
   firebase_core: ^2.15.0 
   keyboard_service: ^2.0.2
   image_picker: ^1.0.1
-  permission_handler: ^10.4.3
+  permission_handler: ^10.0.0
   firebase_auth: ^4.7.1
   cached_network_image: ^3.2.3
   flutter_slidable: ^3.0.0
   lottie: ^2.5.0
   firebase_messaging: ^14.6.5
+  
 
 dev_dependencies:
   flutter_test:

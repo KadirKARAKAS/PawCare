@@ -1,6 +1,12 @@
+import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:paw_care/Utils/constant.dart';
 import 'package:paw_care/topbar_widget.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class DetailPetAdddataWidget extends StatefulWidget {
   const DetailPetAdddataWidget({super.key});
@@ -9,14 +15,16 @@ class DetailPetAdddataWidget extends StatefulWidget {
   State<DetailPetAdddataWidget> createState() => _DetailPetAdddataWidgetState();
 }
 
+final ImagePicker picker = ImagePicker();
+String selectedImagePath = '';
+final TextEditingController petsNameController = TextEditingController();
+final TextEditingController petsAgeController = TextEditingController();
+final TextEditingController petsBreedController = TextEditingController();
+final TextEditingController petsGenderController = TextEditingController();
+
 class _DetailPetAdddataWidgetState extends State<DetailPetAdddataWidget> {
   @override
   Widget build(BuildContext context) {
-    final TextEditingController petsNameController = TextEditingController();
-    final TextEditingController petsAgeController = TextEditingController();
-    final TextEditingController petsBreedController = TextEditingController();
-    final TextEditingController petsGenderController = TextEditingController();
-
     Size size = MediaQuery.of(context).size;
     return Column(
       children: [
@@ -24,7 +32,8 @@ class _DetailPetAdddataWidgetState extends State<DetailPetAdddataWidget> {
         const SizedBox(
           height: 50,
         ),
-        const TopBarWidget(titleText: "Add Pet's"),
+        const TopBarWidget(
+            titleText: "Add Pet's", appbarIcon: Icons.arrow_back),
         Column(
           children: [
             const SizedBox(
@@ -43,7 +52,7 @@ class _DetailPetAdddataWidgetState extends State<DetailPetAdddataWidget> {
                 size, "gender", petsGenderController, TextInputType.name),
             const SizedBox(height: 55),
             petsImageContainerWidget(context),
-            SizedBox(height: 50),
+            const SizedBox(height: 50),
             petsAddButton(),
           ],
         ),
@@ -82,36 +91,141 @@ class _DetailPetAdddataWidgetState extends State<DetailPetAdddataWidget> {
   Widget petsImageContainerWidget(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return InkWell(
-      onTap: () {
-        print("RESİM EKLENCEK VE RESİM İZNİ İSTENİCEK");
+      onTap: () async {
+        var status = await Permission.storage.status;
+        print(status);
+        if (status.isDenied) {
+          await Permission.storage.request().then((value) {
+            if (value.isGranted) {
+              addPhotoFunction();
+            }
+          });
+        } else if (status.isGranted) {
+          addPhotoFunction();
+          print('İzin önceden soruldu ve kullanıcı izni verdi');
+        } else {
+          openAppSettings();
+          print('İzin önceden soruldu ve kullanıcı izni vermedi');
+        }
       },
       child: Container(
-          width: size.width / 2,
-          height: 200,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(41),
-              color: const Color(0xffBFFCFF),
-              border: Border.all(width: 0.5, color: const Color(0xff979797))),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              petsTypeIconBool
-                  ? Hero(tag: "catHero", child: Image.asset("assets/cat.png"))
-                  : Hero(tag: "dogHero", child: Image.asset("assets/dog.png")),
-              Text(
-                "Add your $petsType photo",
-                style: const TextStyle(color: Color(0xff979797)),
+        width: size.width / 2,
+        height: 200,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(41),
+            color: const Color(0xffBFFCFF),
+            border: Border.all(width: 0.5, color: const Color(0xff979797))),
+        child: selectedImagePath == ""
+            ? Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  petsTypeIconBool
+                      ? Hero(
+                          tag: "catHero", child: Image.asset("assets/cat.png"))
+                      : Hero(
+                          tag: "dogHero", child: Image.asset("assets/dog.png")),
+                  Text(
+                    "Add your $petsType photo",
+                    style: const TextStyle(color: Color(0xff979797)),
+                  ),
+                ],
+              )
+            : ClipRRect(
+                borderRadius: BorderRadius.circular(41),
+                child: Image.file(
+                  File(selectedImagePath),
+                  fit: BoxFit.cover,
+                ),
               ),
-            ],
-          )),
+      ),
     );
   }
 
   Widget petsAddButton() {
-    return Container(
-      width: 70,
-      height: 70,
-      child: const Image(image: AssetImage("assets/addIcon.png")),
+    return InkWell(
+      onTap: () async {
+        await storageSave();
+        await addToDatabase();
+      },
+      child: const SizedBox(
+        width: 70,
+        height: 70,
+        child: Image(image: AssetImage("assets/addIcon.png")),
+      ),
     );
+  }
+
+  addPhotoFunction() async {
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+
+    if (image != null) {
+      selectedImagePath = image.path;
+      setState(() {});
+    }
+  }
+
+  storageSave() async {
+    print('start');
+    List<String> imagePathList = selectedImagePath.split('/');
+    await FirebaseStorage.instance
+        .ref('PetsPhoto')
+        .child(imagePathList[imagePathList.length - 1])
+        .putFile(File(selectedImagePath));
+    final imageUrl = await FirebaseStorage.instance
+        .ref('PetsPhoto/${imagePathList[imagePathList.length - 1]}')
+        .getDownloadURL();
+    imageURLL = imageUrl;
+  }
+
+  Future<void> addToDatabase() async {
+    String petName = petsNameController.text;
+    String petAge = petsAgeController.text;
+    String petBreed = petsBreedController.text;
+    String petGender = petsGenderController.text;
+
+    final plant = {
+      "PetsType": petsType,
+      "PetsName": petName,
+      "PetsAge": petAge,
+      "PetsBreed": petBreed,
+      "PetsGender": petGender,
+      "PetsPhotoURL": imageURLL,
+      'createdTime': DateTime.now()
+    };
+
+    await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection("My Pets")
+        .doc()
+        .set(plant);
+    petsNameController.clear();
+    petsAgeController.clear();
+    petsBreedController.clear();
+    petsGenderController.clear();
+
+    //VERİLERİ FİRABASE'E EKLEDİK VE BUNDAN SONRASI VERİLERİ FİREBASEDEN ÇEKME İŞLEMİ
+    final userRef = FirebaseFirestore.instance
+        .collection("Users")
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection("My Pets")
+        .orderBy('createdTime', descending: true);
+
+    final querySnapshot = await userRef.get();
+    getdataList.clear();
+    querySnapshot.docs.forEach((doc) {
+      getdataList.add(doc.data());
+    });
+    petsNameController.clear();
+    petsAgeController.clear();
+    petsBreedController.clear();
+    petsGenderController.clear();
+
+    // ignore: use_build_context_synchronously
+    // Navigator.pushReplacement(
+    //     context,
+    //     MaterialPageRoute(
+    //       builder: (context) => const Test2Page(),
+    //     ));
   }
 }
