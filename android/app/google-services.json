@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "979999641007",
+    "project_id": "pawcare55",
+    "storage_bucket": "pawcare55.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:979999641007:android:d7b0fe6257e230b987335a",
+        "android_client_info": {
+          "package_name": "com.mysweet.paw_care"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "979999641007-cfki7ss6eek1o5jffasos8elpthsq778.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFuNZ0QxsgiQUxxj8PqUCsLoqT82noGwU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "979999641007-cfki7ss6eek1o5jffasos8elpthsq778.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
