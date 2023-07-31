@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:paw_care/Utils/constant.dart';
+import 'package:paw_care/topbar_widget.dart';
 
-class DetailPetAdddataWidget extends StatelessWidget {
+class DetailPetAdddataWidget extends StatefulWidget {
   const DetailPetAdddataWidget({super.key});
 
+  @override
+  State<DetailPetAdddataWidget> createState() => _DetailPetAdddataWidgetState();
+}
+
+class _DetailPetAdddataWidgetState extends State<DetailPetAdddataWidget> {
   @override
   Widget build(BuildContext context) {
     final TextEditingController petsNameController = TextEditingController();
@@ -18,17 +24,11 @@ class DetailPetAdddataWidget extends StatelessWidget {
         const SizedBox(
           height: 50,
         ),
-        const Text(
-          "App Pet",
-          style: TextStyle(
-              fontSize: 33,
-              fontWeight: FontWeight.bold,
-              shadows: [Shadow(color: Colors.black, blurRadius: 4)]),
-        ),
+        TopBarWidget(),
         Column(
           children: [
             const SizedBox(
-              height: 50,
+              height: 40,
             ),
             petsdetailcontainer(
                 size, "name", petsNameController, TextInputType.text),
@@ -41,7 +41,7 @@ class DetailPetAdddataWidget extends StatelessWidget {
             const SizedBox(height: 10),
             petsdetailcontainer(
                 size, "gender", petsGenderController, TextInputType.name),
-            const SizedBox(height: 60),
+            const SizedBox(height: 55),
             petsImageContainerWidget(context),
           ],
         ),
@@ -79,10 +79,29 @@ class DetailPetAdddataWidget extends StatelessWidget {
 
   Widget petsImageContainerWidget(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Container(
-      width: size.width,
-      height: 50,
-      color: Colors.red,
+    return InkWell(
+      onTap: () {
+        print("RESİM EKLENCEK VE RESİM İZNİ İSTENİCEK");
+      },
+      child: Container(
+          width: size.width / 2,
+          height: 200,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(41),
+              color: const Color(0xffBFFCFF),
+              border: Border.all(width: 0.5, color: const Color(0xff979797))),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              petsTypeIconBool
+                  ? Image.asset("assets/cat.png")
+                  : Image.asset("assets/dog.png"),
+              Text(
+                "Add your $petsType photo",
+                style: const TextStyle(color: Color(0xff979797)),
+              ),
+            ],
+          )),
     );
   }
 }

@@ -48,6 +48,7 @@ class SelectPetTypePageWidget extends StatelessWidget {
     return InkWell(
       onTap: () {
         petsType = "Cat's";
+        petsTypeIconBool = true;
         Navigator.push(
             context,
             MaterialPageRoute(
@@ -73,6 +74,7 @@ class SelectPetTypePageWidget extends StatelessWidget {
     return InkWell(
       onTap: () {
         petsType = "Dog's";
+        petsTypeIconBool = false;
         Navigator.push(
             context,
             MaterialPageRoute(
