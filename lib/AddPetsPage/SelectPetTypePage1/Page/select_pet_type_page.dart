@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:paw_care/AddPetsPage/SelectPetTypePage/Widget/select_pet_type_page_widget.dart';
+import 'package:paw_care/AddPetsPage/SelectPetTypePage1/Widget/select_pet_type_page_widget.dart';
 
 class SelectPetTypePage extends StatefulWidget {
   const SelectPetTypePage({super.key});

@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:paw_care/test2page.dart';
 
 import 'Utils/constant.dart';
 
@@ -96,10 +95,10 @@ class _TestPageState extends State<TestPage> {
     textFieldController1.clear();
 
     // ignore: use_build_context_synchronously
-    Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const Test2Page(),
-        ));
+    // Navigator.pushReplacement(
+    //     context,
+    //     MaterialPageRoute(
+    //       builder: (context) => const Test2Page(),
+    //     ));
   }
 }

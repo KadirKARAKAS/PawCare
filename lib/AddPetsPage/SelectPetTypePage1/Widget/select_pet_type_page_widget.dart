@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paw_care/AddPetsPage/DetailPetPage2/Page/detail_pet_page.dart';
 import 'package:paw_care/Utils/constant.dart';
 
 class SelectPetTypePageWidget extends StatelessWidget {
@@ -34,20 +35,24 @@ class SelectPetTypePageWidget extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            catContainer(),
+            catContainer(context),
             SizedBox(width: 30),
-            dogContainer(),
+            dogContainer(context),
           ],
         ),
       ],
     );
   }
 
-  Widget catContainer() {
+  Widget catContainer(BuildContext context) {
     return InkWell(
       onTap: () {
-        petsType = "Cat";
-        print(petsType);
+        petsType = "Cat's";
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const DetailPetPage(),
+            ));
       },
       child: Container(
         width: 110,
@@ -64,11 +69,15 @@ class SelectPetTypePageWidget extends StatelessWidget {
     );
   }
 
-  Widget dogContainer() {
+  Widget dogContainer(BuildContext context) {
     return InkWell(
       onTap: () {
-        petsType = "Dog";
-        print(petsType);
+        petsType = "Dog's";
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const DetailPetPage(),
+            ));
       },
       child: Container(
         width: 110,
@@ -76,7 +85,7 @@ class SelectPetTypePageWidget extends StatelessWidget {
         decoration: BoxDecoration(
             color: const Color(0xffBFFCFF),
             borderRadius: BorderRadius.circular(30),
-            image: DecorationImage(
+            image: const DecorationImage(
                 image: AssetImage("assets/dog.png"), fit: BoxFit.cover),
             boxShadow: const [
               BoxShadow(

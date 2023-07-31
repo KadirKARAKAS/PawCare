@@ -3,8 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:paw_care/AddPetsPage/SelectPetTypePage/Page/select_pet_type_page.dart';
-import 'package:paw_care/test2page.dart';
+import 'package:paw_care/AddPetsPage/SelectPetTypePage1/Page/select_pet_type_page.dart';
+import 'package:paw_care/testpage.dart';
 import 'Utils/constant.dart';
 
 Future<void> main() async {
@@ -48,7 +48,7 @@ Future<void> handleAppStart() async {
       ));
     } else {
       runApp(const MaterialApp(
-        home: Test2Page(),
+        home: TestPage(),
       ));
     }
   }
