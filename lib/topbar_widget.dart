@@ -1,21 +1,14 @@
 import 'package:flutter/material.dart';
 
-class TopBarWidget extends StatefulWidget {
-  const TopBarWidget({super.key});
-
-  @override
-  State<TopBarWidget> createState() => _TopBarWidgetState();
-}
-
-class _TopBarWidgetState extends State<TopBarWidget> {
+class TopBarWidget extends StatelessWidget {
+  const TopBarWidget({super.key, required this.titleText});
+  final String titleText;
   @override
   Widget build(BuildContext context) {
-    String titleText = "";
-    Size size = MediaQuery.of(context).size;
     return Stack(
       children: [
         Padding(
-          padding: EdgeInsets.only(top: 4),
+          padding: const EdgeInsets.only(top: 4),
           child: Align(
               alignment: Alignment.centerLeft,
               child: InkWell(

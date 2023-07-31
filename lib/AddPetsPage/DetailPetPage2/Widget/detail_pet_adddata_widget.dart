@@ -24,7 +24,7 @@ class _DetailPetAdddataWidgetState extends State<DetailPetAdddataWidget> {
         const SizedBox(
           height: 50,
         ),
-        TopBarWidget(),
+        const TopBarWidget(titleText: "Add Pet's"),
         Column(
           children: [
             const SizedBox(
@@ -43,6 +43,8 @@ class _DetailPetAdddataWidgetState extends State<DetailPetAdddataWidget> {
                 size, "gender", petsGenderController, TextInputType.name),
             const SizedBox(height: 55),
             petsImageContainerWidget(context),
+            SizedBox(height: 50),
+            petsAddButton(),
           ],
         ),
       ],
@@ -94,14 +96,22 @@ class _DetailPetAdddataWidgetState extends State<DetailPetAdddataWidget> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               petsTypeIconBool
-                  ? Image.asset("assets/cat.png")
-                  : Image.asset("assets/dog.png"),
+                  ? Hero(tag: "catHero", child: Image.asset("assets/cat.png"))
+                  : Hero(tag: "dogHero", child: Image.asset("assets/dog.png")),
               Text(
                 "Add your $petsType photo",
                 style: const TextStyle(color: Color(0xff979797)),
               ),
             ],
           )),
+    );
+  }
+
+  Widget petsAddButton() {
+    return Container(
+      width: 70,
+      height: 70,
+      child: const Image(image: AssetImage("assets/addIcon.png")),
     );
   }
 }

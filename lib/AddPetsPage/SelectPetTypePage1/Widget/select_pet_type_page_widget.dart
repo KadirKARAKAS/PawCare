@@ -61,11 +61,12 @@ class SelectPetTypePageWidget extends StatelessWidget {
         decoration: BoxDecoration(
             color: const Color(0xffBFFCFF),
             borderRadius: BorderRadius.circular(30),
-            image: const DecorationImage(image: AssetImage("assets/cat.png")),
             boxShadow: const [
               BoxShadow(
                   offset: Offset(0, 3), color: Colors.black26, blurRadius: 2)
             ]),
+        child: const Hero(
+            tag: "catHero", child: Image(image: AssetImage("assets/cat.png"))),
       ),
     );
   }
@@ -87,12 +88,16 @@ class SelectPetTypePageWidget extends StatelessWidget {
         decoration: BoxDecoration(
             color: const Color(0xffBFFCFF),
             borderRadius: BorderRadius.circular(30),
-            image: const DecorationImage(
-                image: AssetImage("assets/dog.png"), fit: BoxFit.cover),
             boxShadow: const [
               BoxShadow(
                   offset: Offset(0, 3), color: Colors.black26, blurRadius: 2)
             ]),
+        child: const Hero(
+          tag: "dogHero",
+          child: Image(
+            image: AssetImage("assets/dog.png"),
+          ),
+        ),
       ),
     );
   }
