@@ -70,10 +70,21 @@ class _SplashScreenState extends State<SplashScreen> {
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .collection("My Pets");
 
+      //GETDATALİST VERİLERİNİ LİSTEYE ÇEKME AŞAMASI
       final querySnapshot = await userRef.get();
       getdataList.clear();
       querySnapshot.docs.forEach((doc) {
         getdataList.add(doc.data());
+      });
+      final userReff = FirebaseFirestore.instance
+          .collection("Users")
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection("Daily ToDoList");
+      //DAİLY TO DO LİST VERİLERİNİ LİSTEYE ÇEKME AŞAMASI
+      final querysnapshot = await userReff.get();
+      dailyToDoList.clear();
+      querysnapshot.docs.forEach((doc) {
+        dailyToDoList.add(doc.data());
       });
       if (getdataList.isEmpty) {
         Navigator.pushReplacement(
