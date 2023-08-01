@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:paw_care/Utils/constant.dart';
 
 class TopBarWidget extends StatelessWidget {
-  const TopBarWidget(
-      {super.key, required this.titleText, required this.appbarIcon});
+  const TopBarWidget({super.key, required this.titleText});
   final String titleText;
-  final IconData appbarIcon;
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -15,10 +14,12 @@ class TopBarWidget extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: InkWell(
                 onTap: () => Navigator.pop(context),
-                child: Icon(
-                  appbarIcon,
-                  size: 30,
-                ),
+                child: iconVisiable
+                    ? const Icon(
+                        Icons.arrow_back,
+                        size: 30,
+                      )
+                    : const SizedBox(),
               )),
         ),
         Row(
@@ -29,7 +30,7 @@ class TopBarWidget extends StatelessWidget {
               style: const TextStyle(
                   fontSize: 33,
                   fontWeight: FontWeight.bold,
-                  shadows: [Shadow(color: Colors.black, blurRadius: 0)]),
+                  shadows: [Shadow(color: Colors.black, blurRadius: 1.5)]),
             ),
           ],
         )

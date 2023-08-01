@@ -22,9 +22,7 @@ class _SelectPetTypePageState extends State<SelectPetTypePage> {
         ),
         const Padding(
           padding: EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            children: [SelectPetTypePageWidget()],
-          ),
+          child: SelectPetTypePageWidget(),
         )
       ],
     ));

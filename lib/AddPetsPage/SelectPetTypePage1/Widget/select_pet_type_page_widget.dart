@@ -36,7 +36,7 @@ class SelectPetTypePageWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             catContainer(context),
-            SizedBox(width: 30),
+            const SizedBox(width: 30),
             dogContainer(context),
           ],
         ),
@@ -47,6 +47,7 @@ class SelectPetTypePageWidget extends StatelessWidget {
   Widget catContainer(BuildContext context) {
     return InkWell(
       onTap: () {
+        iconVisiable = false;
         petsType = "Cat's";
         petsTypeIconBool = true;
         Navigator.push(
@@ -74,6 +75,7 @@ class SelectPetTypePageWidget extends StatelessWidget {
   Widget dogContainer(BuildContext context) {
     return InkWell(
       onTap: () {
+        iconVisiable = false;
         petsType = "Dog's";
         petsTypeIconBool = false;
         Navigator.push(

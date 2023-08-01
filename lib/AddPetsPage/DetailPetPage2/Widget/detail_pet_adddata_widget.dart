@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:paw_care/MyPetsPage/Page/mypets_page.dart';
 import 'package:paw_care/Utils/constant.dart';
 import 'package:paw_care/topbar_widget.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -32,30 +33,59 @@ class _DetailPetAdddataWidgetState extends State<DetailPetAdddataWidget> {
         const SizedBox(
           height: 50,
         ),
-        const TopBarWidget(
-            titleText: "Add Pet's", appbarIcon: Icons.arrow_back),
-        Column(
+        const TopBarWidget(titleText: "Add Pet's"),
+        Stack(
           children: [
-            const SizedBox(
-              height: 40,
+            Column(
+              children: [
+                const SizedBox(
+                  height: 40,
+                ),
+                petsdetailcontainer(
+                    size, "name", petsNameController, TextInputType.text),
+                const SizedBox(height: 10),
+                petsdetailcontainer(
+                    size, "age", petsAgeController, TextInputType.number),
+                const SizedBox(height: 10),
+                petsdetailcontainer(
+                    size, "breed", petsBreedController, TextInputType.name),
+                const SizedBox(height: 10),
+                petsdetailcontainer(
+                    size, "gender", petsGenderController, TextInputType.name),
+                const SizedBox(height: 55),
+                petsImageContainerWidget(context),
+                const SizedBox(height: 50),
+                petsAddButton(),
+              ],
             ),
-            petsdetailcontainer(
-                size, "name", petsNameController, TextInputType.text),
-            const SizedBox(height: 10),
-            petsdetailcontainer(
-                size, "age", petsAgeController, TextInputType.number),
-            const SizedBox(height: 10),
-            petsdetailcontainer(
-                size, "breed", petsBreedController, TextInputType.name),
-            const SizedBox(height: 10),
-            petsdetailcontainer(
-                size, "gender", petsGenderController, TextInputType.name),
-            const SizedBox(height: 55),
-            petsImageContainerWidget(context),
-            const SizedBox(height: 50),
-            petsAddButton(),
+            loadingCircle(size),
           ],
         ),
+      ],
+    );
+  }
+
+  Stack loadingCircle(Size size) {
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        if (circleBool)
+          Container(
+            width: size.width,
+            height: size.height - 200,
+            color: Colors.transparent,
+          ),
+        circleBool
+            ? const SizedBox(
+                width: 100,
+                height: 100,
+                child: CircularProgressIndicator(
+                  backgroundColor: Colors.white,
+                  strokeWidth: 10,
+                  valueColor: AlwaysStoppedAnimation<Color>(Color(0xff60F9FF)),
+                ),
+              )
+            : const SizedBox(),
       ],
     );
   }
@@ -144,6 +174,9 @@ class _DetailPetAdddataWidgetState extends State<DetailPetAdddataWidget> {
   Widget petsAddButton() {
     return InkWell(
       onTap: () async {
+        setState(() {
+          circleBool = true;
+        });
         await storageSave();
         await addToDatabase();
       },
@@ -203,6 +236,7 @@ class _DetailPetAdddataWidgetState extends State<DetailPetAdddataWidget> {
     petsAgeController.clear();
     petsBreedController.clear();
     petsGenderController.clear();
+    selectedImagePath = "";
 
     //VERİLERİ FİRABASE'E EKLEDİK VE BUNDAN SONRASI VERİLERİ FİREBASEDEN ÇEKME İŞLEMİ
     final userRef = FirebaseFirestore.instance
@@ -220,12 +254,13 @@ class _DetailPetAdddataWidgetState extends State<DetailPetAdddataWidget> {
     petsAgeController.clear();
     petsBreedController.clear();
     petsGenderController.clear();
-
-    // ignore: use_build_context_synchronously
-    // Navigator.pushReplacement(
-    //     context,
-    //     MaterialPageRoute(
-    //       builder: (context) => const Test2Page(),
-    //     ));
+    setState(() {
+      circleBool = false;
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const MyPetsPage(),
+          ));
+    }); //VERİ EKLEME VE ÇEKME İŞLEMİ TAMAMLANDIKTAN SONRA CİRCLE I KAPATIYOR VE DİĞER SAYFAYA GEÇİYORUZ.
   }
 }

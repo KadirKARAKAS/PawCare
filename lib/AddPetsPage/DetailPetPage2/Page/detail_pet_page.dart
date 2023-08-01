@@ -22,11 +22,7 @@ class _DetailPetPageState extends State<DetailPetPage> {
         ),
         const Padding(
           padding: EdgeInsets.symmetric(horizontal: 30),
-          child: Column(
-            children: [
-              DetailPetAdddataWidget(),
-            ],
-          ),
+          child: DetailPetAdddataWidget(),
         )
       ],
     ));
