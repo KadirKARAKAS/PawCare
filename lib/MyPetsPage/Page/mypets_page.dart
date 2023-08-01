@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:paw_care/MyPetsPage/Widget/pets_photo_circlelist_widget.dart';
+import 'package:paw_care/MyPetsPage/Widget/todo_list_container_widget%20copy.dart';
+import 'package:paw_care/MyPetsPage/Widget/todo_list_container_widget.dart';
 import 'package:paw_care/topbar_widget.dart';
 
 class MyPetsPage extends StatefulWidget {
@@ -24,13 +26,29 @@ class _MyPetsPageState extends State<MyPetsPage> {
                     image: AssetImage('assets/BackGroundPage.png'),
                     fit: BoxFit.cover)),
           ),
-          const Column(
-            children: [
-              SizedBox(height: 20),
-              TopBarWidget(titleText: "MyPets"),
-              SizedBox(height: 10),
-              PetsPhotoCircleListWidget(),
-            ],
+          const SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(height: 30),
+                TopBarWidget(titleText: "MyPets"),
+                SizedBox(height: 10),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 15,
+                      ),
+                      PetsPhotoCircleListWidget(),
+                      SizedBox(height: 30),
+                      ToDoListContainerWidget(),
+                      SizedBox(height: 30),
+                      VaccinationListContainer(),
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
         ],
       ),

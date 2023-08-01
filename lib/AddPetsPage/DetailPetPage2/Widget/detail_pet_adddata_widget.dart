@@ -31,7 +31,7 @@ class _DetailPetAdddataWidgetState extends State<DetailPetAdddataWidget> {
       children: [
         const Center(),
         const SizedBox(
-          height: 50,
+          height: 30,
         ),
         const TopBarWidget(titleText: "Add Pet's"),
         Stack(
