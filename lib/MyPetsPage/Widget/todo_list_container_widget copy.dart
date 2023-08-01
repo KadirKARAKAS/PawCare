@@ -37,22 +37,45 @@ class _ToDoListContainerWidgetState extends State<ToDoListContainerWidget> {
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
         ),
-        getdataList.isEmpty
-            ? toDoListFirsText()
-            : Padding(
-                padding: const EdgeInsets.only(top: 50),
-                child: SizedBox(
-                  height: 200,
-                  child: ListView.builder(
-                    padding: EdgeInsets.only(),
-                    itemCount: dailyToDoList.length,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      return defaultToDoListTextWidget(index);
-                    },
-                  ),
-                ),
-              ),
+        Padding(
+          padding: const EdgeInsets.only(top: 50),
+          child: SizedBox(
+            height: 200,
+            child: ListView.builder(
+              padding: const EdgeInsets.all(0),
+              itemCount: dailyToDoList.length + 1,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                if (index == dailyToDoList.length) {
+                  return dailyToDoList.isEmpty
+                      ? const Padding(
+                          padding: EdgeInsets.only(left: 10, top: 10),
+                          child: Row(
+                            children: [
+                              Image(
+                                image: AssetImage("assets/taskarrow.png"),
+                                width: 30,
+                                height: 30,
+                              ),
+                              SizedBox(width: 5),
+                              Text(
+                                  "Add and remember what you do to your pet every day.",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.black),
+                                  textAlign: TextAlign.center,
+                                  softWrap: true)
+                            ],
+                          ),
+                        )
+                      : const SizedBox();
+                }
+                return defaultToDoListTextWidget(index);
+              },
+            ),
+          ),
+        ),
         Positioned(
             top: 20,
             right: 30,
@@ -95,7 +118,7 @@ class _ToDoListContainerWidgetState extends State<ToDoListContainerWidget> {
 
   Widget defaultToDoListTextWidget(int index) {
     return Padding(
-      padding: const EdgeInsets.only(left: 10, top: 5),
+      padding: EdgeInsets.only(left: 10, top: 5),
       child: Row(
         children: [
           const Image(
@@ -105,12 +128,13 @@ class _ToDoListContainerWidgetState extends State<ToDoListContainerWidget> {
           ),
           const SizedBox(width: 5),
           Expanded(
-              child: dailyToDoList.isEmpty
-                  ? const Text(
-                      "Here you can write down what you need to do for your pets on a daily basis.",
-                      textAlign: TextAlign.start,
-                      softWrap: true)
-                  : dailyToDoList[index]["DailyToDo"]),
+              child: Text(dailyToDoList[index]["DailyToDo"],
+                  style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black),
+                  textAlign: TextAlign.start,
+                  softWrap: true))
         ],
       ),
     );

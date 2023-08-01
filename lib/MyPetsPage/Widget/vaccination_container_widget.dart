@@ -26,15 +26,37 @@ class _VaccinationListContainerState extends State<VaccinationListContainer> {
                     blurRadius: 3, color: Colors.black26, offset: Offset(-2, 2))
               ]),
         ),
-        InkWell(
-          onTap: () {
-            print(dailyToDoList);
-          },
-          child: Container(
-            width: 50,
-            height: 50,
+        Container(
+            width: size.width,
             color: Colors.red,
-          ),
+            child: Align(
+                alignment: Alignment.centerRight,
+                child: vaccinationContainerRow())),
+      ],
+    );
+  }
+
+  Widget vaccinationContainerRow() {
+    return ListView.builder(
+      shrinkWrap: true,
+      itemCount: getdataList.length,
+      itemBuilder: (context, index) {
+        return vaccinationPhotoContainer(index);
+      },
+    );
+  }
+
+  Widget vaccinationPhotoContainer(int index) {
+    return Column(
+      children: [
+        Container(
+          width: 150,
+          height: 190,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              image: DecorationImage(
+                  image: NetworkImage(getdataList[index]["PetsPhotoURL"]),
+                  fit: BoxFit.cover)),
         ),
       ],
     );
