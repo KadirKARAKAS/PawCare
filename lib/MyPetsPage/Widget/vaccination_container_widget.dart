@@ -26,39 +26,49 @@ class _VaccinationListContainerState extends State<VaccinationListContainer> {
                     blurRadius: 3, color: Colors.black26, offset: Offset(-2, 2))
               ]),
         ),
-        Container(
-            width: size.width,
-            color: Colors.red,
-            child: Align(
-                alignment: Alignment.centerRight,
-                child: vaccinationContainerRow())),
-      ],
-    );
-  }
-
-  Widget vaccinationContainerRow() {
-    return ListView.builder(
-      shrinkWrap: true,
-      itemCount: getdataList.length,
-      itemBuilder: (context, index) {
-        return vaccinationPhotoContainer(index);
-      },
-    );
-  }
-
-  Widget vaccinationPhotoContainer(int index) {
-    return Column(
-      children: [
-        Container(
-          width: 150,
-          height: 190,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              image: DecorationImage(
-                  image: NetworkImage(getdataList[index]["PetsPhotoURL"]),
-                  fit: BoxFit.cover)),
+        const Padding(
+          padding: EdgeInsets.only(top: 20, left: 25),
+          child: Text("Health History",
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 55, left: 10),
+          child: healHistoryContainerRow(),
         ),
       ],
+    );
+  }
+
+  Widget healHistoryContainerRow() {
+    return Padding(
+      padding: const EdgeInsets.only(right: 15),
+      child: SizedBox(
+        height: 190,
+        child: ListView.builder(
+          padding: const EdgeInsets.only(right: 10),
+          scrollDirection: Axis.horizontal,
+          shrinkWrap: true,
+          itemCount: getdataList.length,
+          itemBuilder: (context, index) {
+            return petPhotoContainer(index);
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget petPhotoContainer(int index) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 10),
+      child: Container(
+        width: 150,
+        height: 190,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            image: DecorationImage(
+                image: NetworkImage(getdataList[index]["PetsPhotoURL"]),
+                fit: BoxFit.cover)),
+      ),
     );
   }
 }
