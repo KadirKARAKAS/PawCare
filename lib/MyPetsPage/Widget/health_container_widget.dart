@@ -1,5 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:paw_care/HealthHistoryPage/HealthHistoryMainPage/Page/health_history_mainpage.dart';
+import 'package:paw_care/HealthHistory/Page/health_history_page.dart';
 import 'package:paw_care/Utils/constant.dart';
 
 class VaccinationListContainer extends StatefulWidget {
@@ -67,17 +68,22 @@ class _VaccinationListContainerState extends State<VaccinationListContainer> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const HealthHistoryMainPage(),
+                builder: (context) => const HealthHistoryPage(),
               ));
         },
         child: Container(
           width: 150,
           height: 190,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              image: DecorationImage(
-                  image: NetworkImage(getdataList[index]["PetsPhotoURL"]),
-                  fit: BoxFit.cover)),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(13),
+            child: CachedNetworkImage(
+              imageUrl: getdataList[index]["PetsPhotoURL"],
+              fit: BoxFit.cover,
+            ),
+          ),
         ),
       ),
     );
