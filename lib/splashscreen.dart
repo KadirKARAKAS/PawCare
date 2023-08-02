@@ -65,27 +65,39 @@ class _SplashScreenState extends State<SplashScreen> {
         home: SelectPetTypePage(),
       ));
     } else {
+      //GETDATALİST VERİLERİNİ LİSTEYE ÇEKME AŞAMASI
       final userRef = FirebaseFirestore.instance
           .collection("Users")
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .collection("My Pets");
-
-      //GETDATALİST VERİLERİNİ LİSTEYE ÇEKME AŞAMASI
       final querySnapshot = await userRef.get();
       getdataList.clear();
       querySnapshot.docs.forEach((doc) {
         getdataList.add(doc.data());
       });
+      //DAİLY TO DO LİST VERİLERİNİ LİSTEYE ÇEKME AŞAMASI
       final userReff = FirebaseFirestore.instance
           .collection("Users")
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .collection("Daily ToDoList");
-      //DAİLY TO DO LİST VERİLERİNİ LİSTEYE ÇEKME AŞAMASI
       final querysnapshot = await userReff.get();
       dailyToDoList.clear();
       querysnapshot.docs.forEach((doc) {
         dailyToDoList.add(doc.data());
+        //VACCİNATİON VERİLERİNİ LİSTEYE ÇEKME AŞAMASI:
       });
+      final userRefff = FirebaseFirestore.instance
+          .collection("Users")
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection("Vaccination History")
+          .orderBy('createdTime', descending: true);
+
+      final querySnapshoot = await userRefff.get();
+      petsVaccinationList.clear();
+      querySnapshoot.docs.forEach((doc) {
+        petsVaccinationList.add(doc.data());
+      });
+      //BİR SONRAKİ EKLENİCEK LİSTEYE VERİ ÇEKME AŞAMASI BURAYA YAZILCAK
       if (getdataList.isEmpty) {
         Navigator.pushReplacement(
             context,
