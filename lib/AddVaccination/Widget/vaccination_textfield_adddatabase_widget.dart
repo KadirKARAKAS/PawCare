@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:paw_care/HealthHistory/Page/health_history_page.dart';
 import 'package:paw_care/Utils/constant.dart';
 
 class VaccinationTextFieldAdddataBaseWidget extends StatefulWidget {
@@ -164,14 +165,19 @@ class _VaccinationTextFieldAdddataBaseWidgetState
       querySnapshoot.docs.forEach((doc) {
         petsVaccinationList.add(doc.data());
       });
-
+      Future.delayed(const Duration(milliseconds: 400), () {
+        valueNotifierX.value += 1;
+      });
       setState(() {
         circleBool = false;
-        print(petsVaccinationList);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const HealthHistoryPage(),
+            ));
       });
     } catch (error) {
       print('Error adding data to Firestore: $error');
-      // Hata durumunda kullanıcıya bir hata mesajı gösterebilirsiniz.
     }
   }
 }

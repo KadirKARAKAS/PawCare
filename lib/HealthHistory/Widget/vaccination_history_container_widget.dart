@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paw_care/AddVaccination/Page/vaccination_homepage.dart';
 import 'package:paw_care/Utils/constant.dart';
 
 class VaccinationHistoryContainerWidget extends StatelessWidget {
@@ -27,23 +28,31 @@ class VaccinationHistoryContainerWidget extends StatelessWidget {
             Column(
               children: [
                 Padding(
-                  padding: EdgeInsets.only(top: 15, left: 20),
-                  child: vaccinationTitle(),
+                  padding: const EdgeInsets.only(top: 15, left: 20),
+                  child: vaccinationTitle(context),
                 ),
-                const SizedBox(height: 10),
-                vaccinationListContainer(context),
-                vaccinationListContainer(context),
-                vaccinationListContainer(context),
+                const SizedBox(height: 5),
+                SizedBox(
+                  height: 190,
+                  child: ListView.builder(
+                    padding: const EdgeInsets.all(0),
+                    shrinkWrap: true,
+                    itemCount: petsVaccinationList.length,
+                    itemBuilder: (context, index) {
+                      return vaccinationListContainer(context, index);
+                    },
+                  ),
+                )
               ],
             ),
           ]);
         });
   }
 
-  Row vaccinationTitle() {
+  Row vaccinationTitle(BuildContext context) {
     return Row(
       children: [
-        Text(
+        const Text(
           "Vaccination History",
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
@@ -53,8 +62,19 @@ class VaccinationHistoryContainerWidget extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Image(
-                    image: AssetImage("assets/plus.png"), width: 20, height: 20)
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const VaccinationHomePage(),
+                        ));
+                  },
+                  child: Image(
+                      image: AssetImage("assets/plus.png"),
+                      width: 20,
+                      height: 20),
+                )
               ],
             ),
           ),
@@ -63,7 +83,7 @@ class VaccinationHistoryContainerWidget extends StatelessWidget {
     );
   }
 
-  Widget vaccinationListContainer(BuildContext context) {
+  Widget vaccinationListContainer(BuildContext context, int index) {
     Size size = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
@@ -73,19 +93,44 @@ class VaccinationHistoryContainerWidget extends StatelessWidget {
             width: size.width,
             height: 40,
             decoration: BoxDecoration(
-                color: Colors.red, borderRadius: BorderRadius.circular(8)),
+                color: const Color(0xffE0FEFF),
+                borderRadius: BorderRadius.circular(8),
+                // ignore: prefer_const_literals_to_create_immutables
+                boxShadow: [
+                  const BoxShadow(
+                      blurRadius: 1,
+                      color: Colors.black54,
+                      offset: Offset(-2, 1))
+                ]),
           ),
           SizedBox(
             height: 40,
             width: size.width,
             child: Center(
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Row(
                   children: [
-                    Image(image: AssetImage("assets/vaccination.png")),
+                    const Image(
+                      image: AssetImage("assets/vaccination.png"),
+                      width: 30,
+                      height: 30,
+                    ),
                     const SizedBox(width: 10),
-                    Text(getdataList[0]["PetsAge"]),
+                    Text(petsVaccinationList[index]["NameVaccination"]),
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(petsVaccinationList[index]["DateVaccination"]),
+                          const Image(
+                            image: AssetImage("assets/treepoint.png"),
+                            width: 20,
+                            height: 20,
+                          ),
+                        ],
+                      ),
+                    )
                   ],
                 ),
               ),

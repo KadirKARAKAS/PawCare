@@ -26,7 +26,7 @@ class _VaccinationHomePageState extends State<VaccinationHomePage> {
               ),
             ),
           ),
-          Column(
+          const Column(
             children: [
               Padding(
                 padding: EdgeInsets.only(top: 30),
