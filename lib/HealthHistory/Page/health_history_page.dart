@@ -42,7 +42,7 @@ class _HealthHistoryPageState extends State<HealthHistoryPage> {
                 SizedBox(height: 40),
                 VaccinationHistoryContainerWidget(),
                 SizedBox(height: 40),
-                TreatmentHistoryContainerWidget()
+                // TreatmentHistoryContainerWidget()
               ],
             ),
           ),

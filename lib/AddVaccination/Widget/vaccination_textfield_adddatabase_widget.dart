@@ -38,16 +38,6 @@ class _VaccinationTextFieldAdddataBaseWidgetState
         textFieldContainerWidget(context, "Jack Pate",
             "Enter the name of the vaccinating doctor", doctorVaccination),
         petsAddButton(),
-        InkWell(
-          onTap: () {
-            print(petsVaccinationList);
-          },
-          child: Container(
-            height: 50,
-            width: 50,
-            color: Colors.red,
-          ),
-        )
       ],
     );
   }
