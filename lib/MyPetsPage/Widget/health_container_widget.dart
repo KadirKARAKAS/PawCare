@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paw_care/HealthHistoryPage/HealthHistoryMainPage/Page/health_history_mainpage.dart';
 import 'package:paw_care/Utils/constant.dart';
 
 class VaccinationListContainer extends StatefulWidget {
@@ -60,14 +61,24 @@ class _VaccinationListContainerState extends State<VaccinationListContainer> {
   Widget petPhotoContainer(int index) {
     return Padding(
       padding: const EdgeInsets.only(left: 10),
-      child: Container(
-        width: 150,
-        height: 190,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            image: DecorationImage(
-                image: NetworkImage(getdataList[index]["PetsPhotoURL"]),
-                fit: BoxFit.cover)),
+      child: InkWell(
+        onTap: () {
+          selectedIndex = index;
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const HealthHistoryMainPage(),
+              ));
+        },
+        child: Container(
+          width: 150,
+          height: 190,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              image: DecorationImage(
+                  image: NetworkImage(getdataList[index]["PetsPhotoURL"]),
+                  fit: BoxFit.cover)),
+        ),
       ),
     );
   }

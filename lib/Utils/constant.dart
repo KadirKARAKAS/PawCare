@@ -6,3 +6,4 @@ bool petsTypeIconBool = false;
 String imageURLL = "";
 bool circleBool = false;
 bool iconVisiable = false;
+int selectedIndex = 0;
