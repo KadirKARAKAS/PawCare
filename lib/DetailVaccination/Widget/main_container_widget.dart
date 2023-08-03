@@ -15,17 +15,7 @@ class _MainContainerWidgetState extends State<MainContainerWidget> {
 
     return Stack(
       children: [
-        Container(
-          width: size.width,
-          height: 465,
-          decoration: BoxDecoration(
-              color: const Color(0xffBFFCFF),
-              borderRadius: BorderRadius.circular(18),
-              boxShadow: const [
-                BoxShadow(
-                    blurRadius: 3, color: Colors.black26, offset: Offset(-2, 2))
-              ]),
-        ),
+        mainContainer(size),
         Column(
           children: [
             const SizedBox(
@@ -49,38 +39,53 @@ class _MainContainerWidgetState extends State<MainContainerWidget> {
               petsVaccinationList[vaccinationSelectedIndex]
                   ["DoctorVaccination"],
             ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: Padding(
-                padding: const EdgeInsets.only(right: 20),
-                child: Container(
-                  height: 35,
-                  width: 80,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      color: const Color(0xffE0FEFF),
-                      boxShadow: const [
-                        BoxShadow(
-                            blurRadius: 3,
-                            color: Colors.black26,
-                            offset: Offset(-2, 2))
-                      ]),
-                  child: Center(
-                      child: InkWell(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: const Text(
-                            "Back",
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
-                          ))),
-                ),
-              ),
-            ),
+            backButton(context),
           ],
         ),
       ],
+    );
+  }
+
+  Align backButton(BuildContext context) {
+    return Align(
+      alignment: Alignment.centerRight,
+      child: Padding(
+        padding: const EdgeInsets.only(right: 20),
+        child: Container(
+          height: 35,
+          width: 80,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color: const Color(0xffE0FEFF),
+              boxShadow: const [
+                BoxShadow(
+                    blurRadius: 3, color: Colors.black26, offset: Offset(-2, 2))
+              ]),
+          child: Center(
+              child: InkWell(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text(
+                    "Back",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ))),
+        ),
+      ),
+    );
+  }
+
+  Container mainContainer(Size size) {
+    return Container(
+      width: size.width,
+      height: 465,
+      decoration: BoxDecoration(
+          color: const Color(0xffBFFCFF),
+          borderRadius: BorderRadius.circular(18),
+          boxShadow: const [
+            BoxShadow(
+                blurRadius: 3, color: Colors.black26, offset: Offset(-2, 2))
+          ]),
     );
   }
 

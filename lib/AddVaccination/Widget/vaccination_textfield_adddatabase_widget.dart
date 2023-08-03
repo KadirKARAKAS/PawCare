@@ -22,29 +22,52 @@ class _VaccinationTextFieldAdddataBaseWidgetState
   @override
   Widget build(BuildContext context) {
     ;
-    return Column(
+    return Stack(
       children: [
-        textFieldContainerWidget(context, "Rabies",
-            "Enter vaccination information", nameVaccination),
-        const SizedBox(height: 10),
-        textFieldContainerWidget(context, "10/09/2022",
-            "Enter the date of vaccination", dateVaccination),
-        const SizedBox(height: 10),
-        textFieldContainerWidget(
-            context,
-            "Animal Health Center",
-            "Enter the name of the clinic where you received the vaccine",
-            clinicVaccination),
-        const SizedBox(height: 10),
-        textFieldContainerWidget(context, "Jack Pate",
-            "Enter the name of the vaccinating doctor", doctorVaccination),
-        petsAddButton(),
+        Column(
+          children: [
+            textFieldContainerWidget(
+                context,
+                "Rabies",
+                "Enter vaccination information",
+                nameVaccination,
+                TextInputType.name),
+            const SizedBox(height: 10),
+            textFieldContainerWidget(
+                context,
+                "10/09/2022",
+                "Enter the date of vaccination",
+                dateVaccination,
+                TextInputType.datetime),
+            const SizedBox(height: 10),
+            textFieldContainerWidget(
+                context,
+                "Animal Health Center",
+                "Enter the name of the clinic where you received the vaccine",
+                clinicVaccination,
+                TextInputType.name),
+            const SizedBox(height: 10),
+            textFieldContainerWidget(
+                context,
+                "Jack Pate",
+                "Enter the name of the vaccinating doctor",
+                doctorVaccination,
+                TextInputType.name),
+            const SizedBox(height: 40),
+            Align(alignment: Alignment.centerRight, child: petsAddButton()),
+          ],
+        ),
+        loadingCircle()
       ],
     );
   }
 
-  Widget textFieldContainerWidget(BuildContext context, String containerText,
-      String containerTopText, TextEditingController controllerR) {
+  Widget textFieldContainerWidget(
+      BuildContext context,
+      String containerText,
+      String containerTopText,
+      TextEditingController controllerR,
+      TextInputType keyboardTypeSelect) {
     Size size = MediaQuery.of(context).size;
     return Column(
       children: [
@@ -72,6 +95,7 @@ class _VaccinationTextFieldAdddataBaseWidgetState
             child: Padding(
               padding: const EdgeInsets.only(left: 10),
               child: TextField(
+                keyboardType: keyboardTypeSelect,
                 controller: controllerR,
                 decoration: InputDecoration(
                     border: InputBorder.none,
@@ -89,16 +113,16 @@ class _VaccinationTextFieldAdddataBaseWidgetState
   }
 
   Widget petsAddButton() {
-    return InkWell(
-      onTap: () async {
-        setState(() {
-          // circleBool = true;
-        });
-        await addToDatabase();
-      },
-      child: const SizedBox(
-        width: 70,
-        height: 70,
+    return Container(
+      width: 70,
+      height: 70,
+      child: InkWell(
+        onTap: () async {
+          setState(() {
+            circleBool = true;
+          });
+          await addToDatabase();
+        },
         child: Image(image: AssetImage("assets/addIcon.png")),
       ),
     );
@@ -179,5 +203,31 @@ class _VaccinationTextFieldAdddataBaseWidgetState
     } catch (error) {
       print('Error adding data to Firestore: $error');
     }
+  }
+
+  Stack loadingCircle() {
+    Size size = MediaQuery.of(context).size;
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        if (circleBool)
+          Container(
+            width: size.width,
+            height: size.height - 200,
+            color: Colors.transparent,
+          ),
+        circleBool
+            ? const SizedBox(
+                width: 100,
+                height: 100,
+                child: CircularProgressIndicator(
+                  backgroundColor: Colors.white,
+                  strokeWidth: 10,
+                  valueColor: AlwaysStoppedAnimation<Color>(Color(0xff60F9FF)),
+                ),
+              )
+            : const SizedBox(),
+      ],
+    );
   }
 }
