@@ -97,7 +97,18 @@ class _SplashScreenState extends State<SplashScreen> {
       querySnapshoot.docs.forEach((doc) {
         petsVaccinationList.add(doc.data());
       });
-      //BİR SONRAKİ EKLENİCEK LİSTEYE VERİ ÇEKME AŞAMASI BURAYA YAZILCAK
+      //treatmentList VERİLERİNİ LİSTEYE ÇEKME
+      final userReffff = FirebaseFirestore.instance
+          .collection("Users")
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection("Treatment History")
+          .orderBy('createdTime', descending: true);
+
+      final querySnapshootTT = await userReffff.get();
+      petsTreatmentList.clear();
+      querySnapshootTT.docs.forEach((doc) {
+        petsTreatmentList.add(doc.data());
+      });
       if (getdataList.isEmpty) {
         Navigator.pushReplacement(
             context,

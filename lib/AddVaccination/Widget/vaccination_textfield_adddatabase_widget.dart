@@ -21,7 +21,6 @@ class _VaccinationTextFieldAdddataBaseWidgetState
     extends State<VaccinationTextFieldAdddataBaseWidget> {
   @override
   Widget build(BuildContext context) {
-    ;
     return Stack(
       children: [
         Column(
@@ -54,7 +53,7 @@ class _VaccinationTextFieldAdddataBaseWidgetState
                 doctorVaccination,
                 TextInputType.name),
             const SizedBox(height: 40),
-            Align(alignment: Alignment.centerRight, child: petsAddButton()),
+            petsAddButton(),
           ],
         ),
         loadingCircle()

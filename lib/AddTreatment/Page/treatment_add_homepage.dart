@@ -28,13 +28,16 @@ class _TreatementAddHomePageState extends State<TreatementAddHomePage> {
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              children: [
-                SizedBox(height: 30),
-                TopBarWidget(titleText: "Treatment Add"),
-                SizedBox(height: 100),
-                TreatmentTextFieldAndAddDataBaseWidget(),
-              ],
+            child: Container(
+              height: size.height,
+              child: Column(
+                children: [
+                  SizedBox(height: 30),
+                  TopBarWidget(titleText: "Treatment Add"),
+                  SizedBox(height: 100),
+                  TreatmentTextFieldAndAddDataBaseWidget(),
+                ],
+              ),
             ),
           )
         ],

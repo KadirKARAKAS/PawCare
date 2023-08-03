@@ -38,8 +38,27 @@ class VaccinationHistoryContainerWidget extends StatelessWidget {
                   child: ListView.builder(
                     padding: const EdgeInsets.all(0),
                     shrinkWrap: true,
-                    itemCount: petsVaccinationList.length,
+                    itemCount: petsVaccinationList.length + 1,
                     itemBuilder: (context, index) {
+                      if (index == petsVaccinationList.length) {
+                        return petsVaccinationList.isEmpty
+                            ? Column(
+                                children: [
+                                  isEmptyContainer(context),
+                                  const SizedBox(height: 5),
+                                  const Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 20),
+                                    child: Text(
+                                      "You can note down your pet's vaccinations and check when the next vaccination date is",
+                                      textAlign: TextAlign.center,
+                                      softWrap: true,
+                                    ),
+                                  )
+                                ],
+                              )
+                            : const SizedBox();
+                      }
                       return vaccinationListContainer(context, index);
                     },
                   ),
@@ -139,6 +158,64 @@ class VaccinationHistoryContainerWidget extends StatelessWidget {
                               width: 20,
                               height: 20,
                             ),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget isEmptyContainer(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+      child: Stack(
+        children: [
+          Container(
+            width: size.width,
+            height: 40,
+            decoration: BoxDecoration(
+                color: const Color(0xffE0FEFF),
+                borderRadius: BorderRadius.circular(8),
+                // ignore: prefer_const_literals_to_create_immutables
+                boxShadow: [
+                  const BoxShadow(
+                      blurRadius: 1,
+                      color: Colors.black54,
+                      offset: Offset(-2, 1))
+                ]),
+          ),
+          SizedBox(
+            height: 40,
+            width: size.width,
+            child: const Center(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                child: Row(
+                  children: [
+                    Image(
+                      image: AssetImage("assets/vaccination.png"),
+                      width: 30,
+                      height: 30,
+                    ),
+                    SizedBox(width: 10),
+                    Text("Vaccine name"),
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text("Date of vaccination"),
+                          Image(
+                            image: AssetImage("assets/treepoint.png"),
+                            width: 20,
+                            height: 20,
                           ),
                         ],
                       ),

@@ -30,13 +30,27 @@ class TreatmentHistoryContainerWidget extends StatelessWidget {
             SizedBox(
               height: 190,
               child: ListView.builder(
-                padding: const EdgeInsets.all(0),
-                shrinkWrap: true,
-                itemCount: petsVaccinationList.length,
-                itemBuilder: (context, index) {
-                  return treatmentnListContainer(context, index);
-                },
-              ),
+                  padding: const EdgeInsets.all(0),
+                  shrinkWrap: true,
+                  itemCount: petsTreatmentList.length + 1,
+                  itemBuilder: (context, index) {
+                    if (index == petsTreatmentList.length) {
+                      return petsTreatmentList.isEmpty
+                          ? Column(
+                              children: [
+                                listisEmptyContainer(context),
+                                const SizedBox(height: 5),
+                                const Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 20),
+                                  child: Text(
+                                      "You can add your pet's treatments here and keep notes"),
+                                ),
+                              ],
+                            )
+                          : const SizedBox();
+                    }
+                    return treatmentnListContainer(context, index);
+                  }),
             )
           ],
         ),
@@ -112,12 +126,12 @@ class TreatmentHistoryContainerWidget extends StatelessWidget {
                       height: 35,
                     ),
                     const SizedBox(width: 10),
-                    Text("SFADASD"),
+                    Text(petsTreatmentList[index]["NameTreatment"]),
                     Expanded(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Text("sssss"),
+                          Text(petsTreatmentList[index]["DateTreatment"]),
                           InkWell(
                             onTap: () {
                               vaccinationSelectedIndex = index;
@@ -133,6 +147,64 @@ class TreatmentHistoryContainerWidget extends StatelessWidget {
                               width: 20,
                               height: 20,
                             ),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget listisEmptyContainer(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+      child: Stack(
+        children: [
+          Container(
+            width: size.width,
+            height: 40,
+            decoration: BoxDecoration(
+                color: const Color(0xffE0FEFF),
+                borderRadius: BorderRadius.circular(8),
+                // ignore: prefer_const_literals_to_create_immutables
+                boxShadow: [
+                  const BoxShadow(
+                      blurRadius: 1,
+                      color: Colors.black54,
+                      offset: Offset(-2, 1))
+                ]),
+          ),
+          SizedBox(
+            height: 40,
+            width: size.width,
+            child: const Center(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                child: Row(
+                  children: [
+                    Image(
+                      image: AssetImage("assets/treatment.png"),
+                      width: 35,
+                      height: 35,
+                    ),
+                    SizedBox(width: 10),
+                    Text("Treatment name"),
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text("Date of treatment"),
+                          Image(
+                            image: AssetImage("assets/treepoint.png"),
+                            width: 20,
+                            height: 20,
                           ),
                         ],
                       ),

@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 List<Map<String, dynamic>> getdataList = [];
 List<Map<String, dynamic>> dailyToDoList = [];
 List<Map<String, dynamic>> petsVaccinationList = [];
+List<Map<String, dynamic>> petsTreatmentList = [];
 
 String petsType = "";
 bool petsTypeIconBool = false;
