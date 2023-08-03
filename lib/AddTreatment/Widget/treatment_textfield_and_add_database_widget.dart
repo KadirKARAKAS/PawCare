@@ -1,22 +1,19 @@
 import 'package:flutter/material.dart';
 
-class TreatmentTextFieldAndAddDataBaseWidget extends StatelessWidget {
+class TreatmentTextFieldAndAddDataBaseWidget extends StatefulWidget {
   const TreatmentTextFieldAndAddDataBaseWidget({super.key});
 
   @override
+  State<TreatmentTextFieldAndAddDataBaseWidget> createState() =>
+      _TreatmentTextFieldAndAddDataBaseWidgetState();
+}
+
+class _TreatmentTextFieldAndAddDataBaseWidgetState
+    extends State<TreatmentTextFieldAndAddDataBaseWidget> {
+  @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Stack(children: [
-      Container(
-        width: size.width,
-        height: size.height,
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/BackGroundPage.png'),
-            fit: BoxFit.cover,
-          ),
-        ),
-      )
-    ]);
+    return Scaffold(
+      body: Container(),
+    );
   }
 }
