@@ -118,11 +118,11 @@ class _VaccinationTextFieldAdddataBaseWidgetState
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Uyarı'),
-            content: Text('Lütfen bütün alanları doldurunuz.'),
+            title: const Text('Warning'),
+            content: const Text('Please fill in all fields.'),
             actions: <Widget>[
               TextButton(
-                child: Text('Tamam'),
+                child: const Text('Okey'),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },

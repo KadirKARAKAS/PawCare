@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:paw_care/AddVaccination/Page/vaccination_homepage.dart';
+import 'package:paw_care/DetailVaccination/Page/vaccination_detail_page.dart';
 import 'package:paw_care/Utils/constant.dart';
 
 class VaccinationHistoryContainerWidget extends StatelessWidget {
@@ -123,10 +124,21 @@ class VaccinationHistoryContainerWidget extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(petsVaccinationList[index]["DateVaccination"]),
-                          const Image(
-                            image: AssetImage("assets/treepoint.png"),
-                            width: 20,
-                            height: 20,
+                          InkWell(
+                            onTap: () {
+                              vaccinationSelectedIndex = index;
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const VaccinationDetailPage(),
+                                  ));
+                            },
+                            child: const Image(
+                              image: AssetImage("assets/treepoint.png"),
+                              width: 20,
+                              height: 20,
+                            ),
                           ),
                         ],
                       ),

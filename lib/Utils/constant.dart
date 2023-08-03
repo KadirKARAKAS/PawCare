@@ -11,3 +11,4 @@ bool circleBool = false;
 bool iconVisiable = false;
 int selectedIndex = 0;
 ValueNotifier<int> valueNotifierX = ValueNotifier(0);
+int vaccinationSelectedIndex = 0;
