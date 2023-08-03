@@ -147,6 +147,9 @@ class _VaccinationTextFieldAdddataBaseWidgetState
               TextButton(
                 child: const Text('Okey'),
                 onPressed: () {
+                  setState(() {
+                    circleBool = false;
+                  });
                   Navigator.of(context).pop();
                 },
               ),

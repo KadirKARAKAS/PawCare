@@ -27,10 +27,10 @@ class _TreatementAddHomePageState extends State<TreatementAddHomePage> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: SizedBox(
               height: size.height,
-              child: Column(
+              child: const Column(
                 children: [
                   SizedBox(height: 30),
                   TopBarWidget(titleText: "Treatment Add"),

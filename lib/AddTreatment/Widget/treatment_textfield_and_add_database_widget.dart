@@ -113,9 +113,9 @@ class _TreatmentTextFieldAndAddDataBaseWidgetState
       height: 70,
       child: InkWell(
         onTap: () async {
-          // setState(() {
-          //   circleBool = true;
-          // });
+          setState(() {
+            circleBool = true;
+          });
           await addToDatabase();
         },
         child: const Image(image: AssetImage("assets/addIcon.png")),
@@ -143,6 +143,9 @@ class _TreatmentTextFieldAndAddDataBaseWidgetState
               TextButton(
                 child: const Text('Okey'),
                 onPressed: () {
+                  setState(() {
+                    circleBool = false;
+                  });
                   Navigator.of(context).pop();
                 },
               ),
