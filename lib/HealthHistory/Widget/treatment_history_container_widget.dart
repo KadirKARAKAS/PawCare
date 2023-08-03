@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:paw_care/AddTreatment/Page/treatment_add_homepage.dart';
+import 'package:paw_care/DetailTreatment/Page/detail_treantment_homepage.dart';
 import 'package:paw_care/Utils/constant.dart';
 
 class TreatmentHistoryContainerWidget extends StatelessWidget {
@@ -43,7 +44,9 @@ class TreatmentHistoryContainerWidget extends StatelessWidget {
                                 const Padding(
                                   padding: EdgeInsets.symmetric(horizontal: 20),
                                   child: Text(
-                                      "You can add your pet's treatments here and keep notes"),
+                                    "You can add your pet's treatments here and keep notes",
+                                    textAlign: TextAlign.start,
+                                  ),
                                 ),
                               ],
                             )
@@ -134,13 +137,13 @@ class TreatmentHistoryContainerWidget extends StatelessWidget {
                           Text(petsTreatmentList[index]["DateTreatment"]),
                           InkWell(
                             onTap: () {
-                              vaccinationSelectedIndex = index;
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //       builder: (context) =>
-                              //           const VaccinationDetailPage(),
-                              //     ));
+                              treatmentSelectedIndex = index;
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const DetailTreantmentHomePage(),
+                                  ));
                             },
                             child: const Image(
                               image: AssetImage("assets/treepoint.png"),

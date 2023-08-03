@@ -24,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
 
     Future.delayed(
-      Duration(milliseconds: 2000),
+      const Duration(milliseconds: 2000),
       () async {
         await handleAppStart();
       },

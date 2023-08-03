@@ -90,7 +90,7 @@ class VaccinationHistoryContainerWidget extends StatelessWidget {
                           builder: (context) => const VaccinationHomePage(),
                         ));
                   },
-                  child: Image(
+                  child: const Image(
                       image: AssetImage("assets/plus.png"),
                       width: 20,
                       height: 20),

@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:paw_care/HealthHistory/Page/health_history_page.dart';
 import 'package:paw_care/Utils/constant.dart';
 
 class VaccinationTextFieldAdddataBaseWidget extends StatefulWidget {
@@ -196,11 +195,7 @@ class _VaccinationTextFieldAdddataBaseWidgetState
       });
       setState(() {
         circleBool = false;
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const HealthHistoryPage(),
-            ));
+        Navigator.pop(context);
       });
     } catch (error) {
       print('Error adding data to Firestore: $error');
