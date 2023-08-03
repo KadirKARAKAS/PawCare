@@ -155,8 +155,8 @@ class VaccinationHistoryContainerWidget extends StatelessWidget {
                             },
                             child: const Image(
                               image: AssetImage("assets/treepoint.png"),
-                              width: 20,
-                              height: 20,
+                              width: 15,
+                              height: 15,
                             ),
                           ),
                         ],
@@ -214,8 +214,8 @@ class VaccinationHistoryContainerWidget extends StatelessWidget {
                           Text("Date of vaccination"),
                           Image(
                             image: AssetImage("assets/treepoint.png"),
-                            width: 20,
-                            height: 20,
+                            width: 15,
+                            height: 15,
                           ),
                         ],
                       ),
