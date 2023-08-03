@@ -113,7 +113,7 @@ class _VaccinationTextFieldAdddataBaseWidgetState
   }
 
   Widget petsAddButton() {
-    return Container(
+    return SizedBox(
       width: 70,
       height: 70,
       child: InkWell(
@@ -123,7 +123,7 @@ class _VaccinationTextFieldAdddataBaseWidgetState
           });
           await addToDatabase();
         },
-        child: Image(image: AssetImage("assets/addIcon.png")),
+        child: const Image(image: AssetImage("assets/addIcon.png")),
       ),
     );
   }

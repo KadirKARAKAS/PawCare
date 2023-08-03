@@ -32,7 +32,7 @@ class _VaccinationHomePageState extends State<VaccinationHomePage> {
                 padding: EdgeInsets.only(top: 30),
                 child: TopBarWidget(titleText: "Vaccination Add"),
               ),
-              SizedBox(height: 100), // Gerekli yükseklik verildi.
+              SizedBox(height: 100),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: VaccinationTextFieldAdddataBaseWidget(),

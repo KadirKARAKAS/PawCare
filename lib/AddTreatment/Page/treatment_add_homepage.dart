@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paw_care/AddTreatment/Widget/treatment_textfield_and_add_database_widget.dart';
 import 'package:paw_care/topbar_widget.dart';
 
 class TreatementAddHomePage extends StatefulWidget {
@@ -25,11 +26,16 @@ class _TreatementAddHomePageState extends State<TreatementAddHomePage> {
               ),
             ),
           ),
-          const Column(
-            children: [
-              SizedBox(height: 30),
-              TopBarWidget(titleText: "Treatment Add"),
-            ],
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              children: [
+                SizedBox(height: 30),
+                TopBarWidget(titleText: "Treatment Add"),
+                SizedBox(height: 100),
+                TreatmentTextFieldAndAddDataBaseWidget(),
+              ],
+            ),
           )
         ],
       ),
