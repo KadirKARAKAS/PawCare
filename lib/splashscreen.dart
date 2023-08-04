@@ -81,9 +81,14 @@ class _SplashScreenState extends State<SplashScreen> {
 
       Future.delayed(Duration(milliseconds: 500), () async {
         getdataList.isEmpty
-            ? runApp(const MaterialApp(
-                home: SelectPetTypePage(),
-              ))
+            ? Navigator.pushReplacement(
+                context,
+                PageTransition(
+                  type: PageTransitionType.fade,
+                  child: const SelectPetTypePage(),
+                  duration: const Duration(milliseconds: 1250),
+                ),
+              )
             : setState(() {
                 circleBool = false;
                 Navigator.pushReplacement(
