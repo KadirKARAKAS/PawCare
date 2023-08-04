@@ -131,7 +131,6 @@ class _VaccinationTextFieldAdddataBaseWidgetState
     String dateVac = dateVaccination.text.trim();
     String clinicVac = clinicVaccination.text.trim();
     String docVac = doctorVaccination.text.trim();
-
     if (nameVac.isEmpty ||
         dateVac.isEmpty ||
         clinicVac.isEmpty ||
@@ -159,7 +158,7 @@ class _VaccinationTextFieldAdddataBaseWidgetState
       return;
     }
 
-    final plant = {
+    final vacList = {
       "NameVaccination": nameVac,
       "DateVaccination": dateVac,
       "ClinicVaccination": clinicVac,
@@ -171,8 +170,10 @@ class _VaccinationTextFieldAdddataBaseWidgetState
       await FirebaseFirestore.instance
           .collection('Users')
           .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection("My Pets")
+          .doc(getdataList[selectedIndex]["docId"])
           .collection("Vaccination History")
-          .add(plant);
+          .add(vacList);
       nameVaccination.clear();
       dateVaccination.clear();
       clinicVaccination.clear();
@@ -182,6 +183,8 @@ class _VaccinationTextFieldAdddataBaseWidgetState
       final userRefff = FirebaseFirestore.instance
           .collection("Users")
           .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection("My Pets")
+          .doc(getdataList[selectedIndex]["docId"])
           .collection("Vaccination History")
           .orderBy('createdTime', descending: true);
 

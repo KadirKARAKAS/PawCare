@@ -65,7 +65,53 @@ class _SplashScreenState extends State<SplashScreen> {
         home: SelectPetTypePage(),
       ));
     } else {
-      //GETDATALİST VERİLERİNİ LİSTEYE ÇEKME AŞAMASI
+      // //GETDATALİST VERİLERİNİ LİSTEYE ÇEKME AŞAMASI
+
+      // //DAİLY TO DO LİST VERİLERİNİ LİSTEYE ÇEKME AŞAMASI
+      // final userReff = FirebaseFirestore.instance
+      //     .collection("Users")
+      //     .doc(FirebaseAuth.instance.currentUser!.uid)
+      //     .collection("Daily ToDoList");
+      // final querysnapshot = await userReff.get();
+      // dailyToDoList.clear();
+      // querysnapshot.docs.forEach((doc) {
+      //   dailyToDoList.add(doc.data());
+      //   //VACCİNATİON VERİLERİNİ LİSTEYE ÇEKME AŞAMASI:
+      // });
+      // final userRefff = FirebaseFirestore.instance
+      //     .collection("Users")
+      //     .doc(FirebaseAuth.instance.currentUser!.uid)
+      //     .collection("My Pets")
+      //     .doc(getdataList[1]["docId"])
+      //     .collection("Vaccination History")
+      //     .orderBy('createdTime', descending: true);
+
+      // final querySnapshoot = await userRefff.get();
+      // petsVaccinationList.clear();
+      // querySnapshoot.docs.forEach((doc) {
+      //   petsVaccinationList.add(doc.data());
+      // });
+      // //treatmentList VERİLERİNİ LİSTEYE ÇEKME
+      // final userReffff = FirebaseFirestore.instance
+      //     .collection("Users")
+      //     .doc(FirebaseAuth.instance.currentUser!.uid)
+      //     .collection("Treatment History")
+      //     .orderBy('createdTime', descending: true);
+
+      // final querySnapshootTT = await userReffff.get();
+      // petsTreatmentList.clear();
+      // querySnapshootTT.docs.forEach((doc) {
+      //   petsTreatmentList.add(doc.data());
+      // });
+      // if (getdataList.isEmpty) {
+      //   Navigator.pushReplacement(
+      //       context,
+      //       PageTransition(
+      //           type: PageTransitionType.fade,
+      //           child: const SelectPetTypePage(),
+      //           duration: const Duration(milliseconds: 1250)));
+      // } else {
+
       final userRef = FirebaseFirestore.instance
           .collection("Users")
           .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -75,55 +121,23 @@ class _SplashScreenState extends State<SplashScreen> {
       querySnapshot.docs.forEach((doc) {
         getdataList.add(doc.data());
       });
-      //DAİLY TO DO LİST VERİLERİNİ LİSTEYE ÇEKME AŞAMASI
-      final userReff = FirebaseFirestore.instance
-          .collection("Users")
-          .doc(FirebaseAuth.instance.currentUser!.uid)
-          .collection("Daily ToDoList");
-      final querysnapshot = await userReff.get();
-      dailyToDoList.clear();
-      querysnapshot.docs.forEach((doc) {
-        dailyToDoList.add(doc.data());
-        //VACCİNATİON VERİLERİNİ LİSTEYE ÇEKME AŞAMASI:
+      Future.delayed(Duration(milliseconds: 500), () async {
+        Size size = MediaQuery.of(context).size;
+        getdataList.isEmpty
+            ? SizedBox(
+                width: size.width,
+                height: size.height,
+              )
+            : setState(() {
+                circleBool = false;
+                Navigator.pushReplacement(
+                    context,
+                    PageTransition(
+                        type: PageTransitionType.fade,
+                        child: const MyPetsPage(),
+                        duration: const Duration(milliseconds: 1250)));
+              });
       });
-      final userRefff = FirebaseFirestore.instance
-          .collection("Users")
-          .doc(FirebaseAuth.instance.currentUser!.uid)
-          .collection("Vaccination History")
-          .orderBy('createdTime', descending: true);
-
-      final querySnapshoot = await userRefff.get();
-      petsVaccinationList.clear();
-      querySnapshoot.docs.forEach((doc) {
-        petsVaccinationList.add(doc.data());
-      });
-      //treatmentList VERİLERİNİ LİSTEYE ÇEKME
-      final userReffff = FirebaseFirestore.instance
-          .collection("Users")
-          .doc(FirebaseAuth.instance.currentUser!.uid)
-          .collection("Treatment History")
-          .orderBy('createdTime', descending: true);
-
-      final querySnapshootTT = await userReffff.get();
-      petsTreatmentList.clear();
-      querySnapshootTT.docs.forEach((doc) {
-        petsTreatmentList.add(doc.data());
-      });
-      if (getdataList.isEmpty) {
-        Navigator.pushReplacement(
-            context,
-            PageTransition(
-                type: PageTransitionType.fade,
-                child: const SelectPetTypePage(),
-                duration: const Duration(milliseconds: 1250)));
-      } else {
-        Navigator.pushReplacement(
-            context,
-            PageTransition(
-                type: PageTransitionType.fade,
-                child: const MyPetsPage(),
-                duration: const Duration(milliseconds: 1250)));
-      }
     }
   }
 }

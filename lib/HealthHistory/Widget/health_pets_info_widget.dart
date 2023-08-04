@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:paw_care/Utils/constant.dart';
 
+import '../../DetailPetInfo/Page/pets_detail_page.dart';
+
 class HealthPetsInfoWidget extends StatelessWidget {
   const HealthPetsInfoWidget({super.key});
 
@@ -26,7 +28,10 @@ class HealthPetsInfoWidget extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Stack(
-              children: [petsDetailContainer(size), petsDetailText()],
+              children: [
+                petsDetailContainer(size),
+                petsDetailText(context),
+              ],
             ),
           ),
         ],
@@ -48,26 +53,48 @@ class HealthPetsInfoWidget extends StatelessWidget {
     );
   }
 
-  Padding petsDetailText() {
+  Padding petsDetailText(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 25, left: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      padding: const EdgeInsets.only(top: 22, left: 10),
+      child: Row(
         children: [
-          Text("Name: ${getdataList[selectedIndex]["PetsName"]}",
-              style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black),
-              textAlign: TextAlign.center,
-              softWrap: true),
-          Text("Age: ${getdataList[selectedIndex]["PetsAge"]}",
-              style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black),
-              textAlign: TextAlign.center,
-              softWrap: true),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("Name: ${getdataList[selectedIndex]["PetsName"]}",
+                  style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black),
+                  textAlign: TextAlign.center,
+                  softWrap: true),
+              Text("Age: ${getdataList[selectedIndex]["PetsAge"]}",
+                  style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black),
+                  textAlign: TextAlign.center,
+                  softWrap: true),
+            ],
+          ),
+          const SizedBox(width: 50),
+          Container(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PetsDetailPage(),
+                    ));
+              },
+              child: const Image(
+                image: AssetImage("assets/treepoint.png"),
+                width: 25,
+                height: 25,
+              ),
+            ),
+          )
         ],
       ),
     );

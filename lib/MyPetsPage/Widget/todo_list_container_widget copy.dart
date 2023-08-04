@@ -58,14 +58,17 @@ class _ToDoListContainerWidgetState extends State<ToDoListContainerWidget> {
                                 height: 30,
                               ),
                               SizedBox(width: 5),
-                              Text(
-                                  "Add and remember what you do to your pet every day.",
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.black),
-                                  textAlign: TextAlign.center,
-                                  softWrap: true)
+                              SizedBox(
+                                width: 270,
+                                child: Text(
+                                    "Add and remember what you do to your pet every day.",
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.black),
+                                    textAlign: TextAlign.start,
+                                    softWrap: true),
+                              )
                             ],
                           ),
                         )
@@ -102,14 +105,14 @@ class _ToDoListContainerWidgetState extends State<ToDoListContainerWidget> {
       top: 120,
       left: 95,
       child: SizedBox(
-        width: 170,
+        width: 100,
         child: Text(
           "Here you can write down what you need to do for your pets on a daily basis.",
           style: TextStyle(
               color: Color(0xff979797),
               fontWeight: FontWeight.w500,
               fontSize: 16),
-          textAlign: TextAlign.center,
+          textAlign: TextAlign.start,
           softWrap: true,
         ),
       ),
@@ -118,7 +121,7 @@ class _ToDoListContainerWidgetState extends State<ToDoListContainerWidget> {
 
   Widget defaultToDoListTextWidget(int index) {
     return Padding(
-      padding: EdgeInsets.only(left: 10, top: 5),
+      padding: const EdgeInsets.only(left: 10, top: 5),
       child: Row(
         children: [
           const Image(

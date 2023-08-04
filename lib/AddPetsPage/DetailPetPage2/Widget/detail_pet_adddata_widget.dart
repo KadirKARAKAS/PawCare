@@ -122,21 +122,22 @@ class _DetailPetAdddataWidgetState extends State<DetailPetAdddataWidget> {
     Size size = MediaQuery.of(context).size;
     return InkWell(
       onTap: () async {
-        var status = await Permission.storage.status;
-        print(status);
-        if (status.isDenied) {
-          await Permission.storage.request().then((value) {
-            if (value.isGranted) {
-              addPhotoFunction();
-            }
-          });
-        } else if (status.isGranted) {
-          addPhotoFunction();
-          print('İzin önceden soruldu ve kullanıcı izni verdi');
-        } else {
-          openAppSettings();
-          print('İzin önceden soruldu ve kullanıcı izni vermedi');
-        }
+        addPhotoFunction();
+
+        // var status = await Permission.storage.status;
+        // print(status);
+        // if (status.isDenied) {
+        //   await Permission.storage.request().then((value) {
+        //     if (value.isGranted) {
+        //     }
+        //   });
+        // } else if (status.isGranted) {
+        //   addPhotoFunction();
+        //   print('İzin önceden soruldu ve kullanıcı izni verdi');
+        // } else {
+        //   openAppSettings();
+        //   print('İzin önceden soruldu ve kullanıcı izni vermedi');
+        // }
       },
       child: Container(
         width: size.width / 2,
@@ -177,6 +178,9 @@ class _DetailPetAdddataWidgetState extends State<DetailPetAdddataWidget> {
         setState(() {
           circleBool = true;
         });
+        Future.delayed(const Duration(milliseconds: 400), () {
+          valueNotifierX.value += 1;
+        });
         await storageSave();
         await addToDatabase();
       },
@@ -211,6 +215,7 @@ class _DetailPetAdddataWidgetState extends State<DetailPetAdddataWidget> {
   }
 
   Future<void> addToDatabase() async {
+    Size size = MediaQuery.of(context).size;
     String petName = petsNameController.text;
     String petAge = petsAgeController.text;
     String petBreed = petsBreedController.text;
@@ -226,19 +231,22 @@ class _DetailPetAdddataWidgetState extends State<DetailPetAdddataWidget> {
       'createdTime': DateTime.now()
     };
 
-    await FirebaseFirestore.instance
+    // Yeni bir belge oluşturmak için `add()` yöntemini kullanın.
+    final docRef = await FirebaseFirestore.instance
         .collection('Users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .collection("My Pets")
-        .doc()
-        .set(plant);
+        .add(plant);
+
+    // Oluşturulan belgeye docID ekleyin.
+    await docRef.update({'docId': docRef.id});
+
     petsNameController.clear();
     petsAgeController.clear();
     petsBreedController.clear();
     petsGenderController.clear();
     selectedImagePath = "";
 
-    //VERİLERİ FİRABASE'E EKLEDİK VE BUNDAN SONRASI VERİLERİ FİREBASEDEN ÇEKME İŞLEMİ
     final userRef = FirebaseFirestore.instance
         .collection("Users")
         .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -247,20 +255,31 @@ class _DetailPetAdddataWidgetState extends State<DetailPetAdddataWidget> {
 
     final querySnapshot = await userRef.get();
     getdataList.clear();
-    querySnapshot.docs.forEach((doc) {
+    querySnapshot.docs.forEach((doc) async {
+      await FirebaseFirestore.instance
+          .collection('Users')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection("My Pets")
+          .doc(doc.id)
+          .update({'docId': doc.id});
       getdataList.add(doc.data());
     });
-    petsNameController.clear();
-    petsAgeController.clear();
-    petsBreedController.clear();
-    petsGenderController.clear();
-    setState(() {
-      circleBool = false;
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const MyPetsPage(),
-          ));
-    }); //VERİ EKLEME VE ÇEKME İŞLEMİ TAMAMLANDIKTAN SONRA CİRCLE I KAPATIYOR VE DİĞER SAYFAYA GEÇİYORUZ.
+
+    Future.delayed(Duration(milliseconds: 500), () async {
+      print("GETDATALİST VERİLERİ BEKLENİYOR..........");
+      await getdataList.isEmpty
+          ? SizedBox(
+              width: size.width,
+              height: size.height,
+            )
+          : setState(() {
+              circleBool = false;
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const MyPetsPage(),
+                  ));
+            });
+    });
   }
 }

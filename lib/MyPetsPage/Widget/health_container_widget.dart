@@ -1,4 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:paw_care/HealthHistory/Page/health_history_page.dart';
 import 'package:paw_care/Utils/constant.dart';
@@ -63,8 +65,24 @@ class _VaccinationListContainerState extends State<VaccinationListContainer> {
     return Padding(
       padding: const EdgeInsets.only(left: 10),
       child: InkWell(
-        onTap: () {
+        onTap: () async {
           selectedIndex = index;
+          petDetailPageIndex = index;
+          //   //VACCİNATİON VERİLERİNİ LİSTEYE ÇEKME AŞAMASI:
+          final userRefff = FirebaseFirestore.instance
+              .collection("Users")
+              .doc(FirebaseAuth.instance.currentUser!.uid)
+              .collection("My Pets")
+              .doc(getdataList[index]["docId"])
+              .collection("Vaccination History")
+              .orderBy('createdTime', descending: true);
+
+          final querySnapshoot = await userRefff.get();
+          petsVaccinationList.clear();
+          querySnapshoot.docs.forEach((doc) {
+            petsVaccinationList.add(doc.data());
+          });
+          // ignore: use_build_context_synchronously
           Navigator.push(
               context,
               MaterialPageRoute(
