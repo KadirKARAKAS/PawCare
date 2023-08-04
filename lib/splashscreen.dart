@@ -79,7 +79,7 @@ class _SplashScreenState extends State<SplashScreen> {
         getdataList.add(doc.data());
       });
 
-      Future.delayed(Duration(milliseconds: 500), () async {
+      Future.delayed(const Duration(milliseconds: 500), () async {
         getdataList.isEmpty
             ? Navigator.pushReplacement(
                 context,
