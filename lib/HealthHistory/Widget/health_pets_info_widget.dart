@@ -29,7 +29,29 @@ class HealthPetsInfoWidget extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Stack(
               children: [
-                petsDetailContainer(size),
+                Stack(
+                  children: [
+                    petsDetailContainer(size),
+                    Positioned(
+                      top: 25,
+                      right: 15,
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => PetsDetailPage(),
+                              ));
+                        },
+                        child: const Image(
+                          image: AssetImage("assets/treepoint.png"),
+                          width: 25,
+                          height: 25,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
                 petsDetailText(context),
               ],
             ),
@@ -56,7 +78,7 @@ class HealthPetsInfoWidget extends StatelessWidget {
   Padding petsDetailText(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 22, left: 10),
-      child: Row(
+      child: Stack(
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,26 +99,28 @@ class HealthPetsInfoWidget extends StatelessWidget {
                   softWrap: true),
             ],
           ),
-          const SizedBox(width: 50),
-          Container(
-            color: Colors.transparent,
-            child: InkWell(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => PetsDetailPage(),
-                    ));
-              },
-              child: const Image(
-                image: AssetImage("assets/treepoint.png"),
-                width: 25,
-                height: 25,
-              ),
-            ),
-          )
         ],
       ),
     );
   }
 }
+//  Positioned(
+//             right: 0,
+//             child: Container(
+//               color: Colors.red,
+//               child: InkWell(
+//                 onTap: () {
+//                   Navigator.push(
+//                       context,
+//                       MaterialPageRoute(
+//                         builder: (context) => PetsDetailPage(),
+//                       ));
+//                 },
+//                 child: const Image(
+//                   image: AssetImage("assets/treepoint.png"),
+//                   width: 25,
+//                   height: 25,
+//                 ),
+//               ),
+//             ),
+//           ),

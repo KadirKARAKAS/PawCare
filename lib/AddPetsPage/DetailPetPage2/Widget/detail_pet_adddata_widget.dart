@@ -124,20 +124,19 @@ class _DetailPetAdddataWidgetState extends State<DetailPetAdddataWidget> {
       onTap: () async {
         addPhotoFunction();
 
-        // var status = await Permission.storage.status;
-        // print(status);
-        // if (status.isDenied) {
-        //   await Permission.storage.request().then((value) {
-        //     if (value.isGranted) {
-        //     }
-        //   });
-        // } else if (status.isGranted) {
-        //   addPhotoFunction();
-        //   print('İzin önceden soruldu ve kullanıcı izni verdi');
-        // } else {
-        //   openAppSettings();
-        //   print('İzin önceden soruldu ve kullanıcı izni vermedi');
-        // }
+        var status = await Permission.storage.status;
+        print(status);
+        if (status.isDenied) {
+          await Permission.storage.request().then((value) {
+            if (value.isGranted) {}
+          });
+        } else if (status.isGranted) {
+          addPhotoFunction();
+          print('İzin önceden soruldu ve kullanıcı izni verdi');
+        } else {
+          openAppSettings();
+          print('İzin önceden soruldu ve kullanıcı izni vermedi');
+        }
       },
       child: Container(
         width: size.width / 2,

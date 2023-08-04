@@ -47,7 +47,7 @@ class PetsPhotoCircleListWidget extends StatelessWidget {
               child: CircularProgressIndicator(),
             ),
             errorWidget: (context, url, error) => const Icon(
-              Icons.pets,
+              Icons.error,
               size: 50,
             ),
           ),

@@ -16,3 +16,4 @@ int vaccinationSelectedIndex = 0;
 int treatmentSelectedIndex = 0;
 int petDetailPageIndex = 0;
 String selectedDocID = "";
+bool circleVisiable = false;
