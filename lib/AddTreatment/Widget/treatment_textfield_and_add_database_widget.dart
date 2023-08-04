@@ -167,6 +167,8 @@ class _TreatmentTextFieldAndAddDataBaseWidgetState
       await FirebaseFirestore.instance
           .collection('Users')
           .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection("My Pets")
+          .doc(getdataList[selectedIndex]["docId"])
           .collection("Treatment History")
           .add(plant);
       nameTreatment.clear();
@@ -178,6 +180,8 @@ class _TreatmentTextFieldAndAddDataBaseWidgetState
       final userReffff = FirebaseFirestore.instance
           .collection("Users")
           .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection("My Pets")
+          .doc(getdataList[selectedIndex]["docId"])
           .collection("Treatment History")
           .orderBy('createdTime', descending: true);
 

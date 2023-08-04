@@ -82,6 +82,20 @@ class _VaccinationListContainerState extends State<VaccinationListContainer> {
           querySnapshoot.docs.forEach((doc) {
             petsVaccinationList.add(doc.data());
           });
+          // //treatmentList VERİLERİNİ LİSTEYE ÇEKME
+          final userReffff = FirebaseFirestore.instance
+              .collection("Users")
+              .doc(FirebaseAuth.instance.currentUser!.uid)
+              .collection("My Pets")
+              .doc(getdataList[selectedIndex]["docId"])
+              .collection("Treatment History")
+              .orderBy('createdTime', descending: true);
+
+          final querySnapshootTT = await userReffff.get();
+          petsTreatmentList.clear();
+          querySnapshootTT.docs.forEach((doc) {
+            petsTreatmentList.add(doc.data());
+          });
           // ignore: use_build_context_synchronously
           Navigator.push(
               context,

@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -12,7 +10,7 @@ import 'AddPetsPage/SelectPetTypePage1/Page/select_pet_type_page.dart';
 import 'Utils/constant.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
+  const SplashScreen({Key? key}) : super(key: key);
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -22,7 +20,6 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-
     Future.delayed(
       const Duration(milliseconds: 2000),
       () async {
@@ -50,12 +47,9 @@ class _SplashScreenState extends State<SplashScreen> {
     FirebaseAuth auth = FirebaseAuth.instance;
     if (auth.currentUser == null) {
       await FirebaseAuth.instance.signInAnonymously();
-      Map<String, dynamic> mapSaveData = {};
-      if (Platform.isIOS) {
-        mapSaveData = {'Platform': 'iOS'};
-      } else {
-        mapSaveData = {'Platform': 'Android'};
-      }
+      final Map<String, dynamic> mapSaveData =
+          Platform.isIOS ? {'Platform': 'iOS'} : {'Platform': 'Android'};
+
       await FirebaseFirestore.instance
           .collection('Users')
           .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -65,77 +59,41 @@ class _SplashScreenState extends State<SplashScreen> {
         home: SelectPetTypePage(),
       ));
     } else {
-      // //GETDATALİST VERİLERİNİ LİSTEYE ÇEKME AŞAMASI
-
-      // //DAİLY TO DO LİST VERİLERİNİ LİSTEYE ÇEKME AŞAMASI
-      // final userReff = FirebaseFirestore.instance
-      //     .collection("Users")
-      //     .doc(FirebaseAuth.instance.currentUser!.uid)
-      //     .collection("Daily ToDoList");
-      // final querysnapshot = await userReff.get();
-      // dailyToDoList.clear();
-      // querysnapshot.docs.forEach((doc) {
-      //   dailyToDoList.add(doc.data());
-      //   //VACCİNATİON VERİLERİNİ LİSTEYE ÇEKME AŞAMASI:
-      // });
-      // final userRefff = FirebaseFirestore.instance
-      //     .collection("Users")
-      //     .doc(FirebaseAuth.instance.currentUser!.uid)
-      //     .collection("My Pets")
-      //     .doc(getdataList[1]["docId"])
-      //     .collection("Vaccination History")
-      //     .orderBy('createdTime', descending: true);
-
-      // final querySnapshoot = await userRefff.get();
-      // petsVaccinationList.clear();
-      // querySnapshoot.docs.forEach((doc) {
-      //   petsVaccinationList.add(doc.data());
-      // });
-      // //treatmentList VERİLERİNİ LİSTEYE ÇEKME
-      // final userReffff = FirebaseFirestore.instance
-      //     .collection("Users")
-      //     .doc(FirebaseAuth.instance.currentUser!.uid)
-      //     .collection("Treatment History")
-      //     .orderBy('createdTime', descending: true);
-
-      // final querySnapshootTT = await userReffff.get();
-      // petsTreatmentList.clear();
-      // querySnapshootTT.docs.forEach((doc) {
-      //   petsTreatmentList.add(doc.data());
-      // });
-      // if (getdataList.isEmpty) {
-      //   Navigator.pushReplacement(
-      //       context,
-      //       PageTransition(
-      //           type: PageTransitionType.fade,
-      //           child: const SelectPetTypePage(),
-      //           duration: const Duration(milliseconds: 1250)));
-      // } else {
+      final userReff = FirebaseFirestore.instance
+          .collection("Users")
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection("Daily ToDoList");
+      final querySnapshot = await userReff.get();
+      dailyToDoList.clear();
+      querySnapshot.docs.forEach((doc) {
+        dailyToDoList.add(doc.data());
+      });
 
       final userRef = FirebaseFirestore.instance
           .collection("Users")
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .collection("My Pets");
-      final querySnapshot = await userRef.get();
+      final querySnapshotPets = await userRef.get();
       getdataList.clear();
-      querySnapshot.docs.forEach((doc) {
+      querySnapshotPets.docs.forEach((doc) {
         getdataList.add(doc.data());
       });
+
       Future.delayed(Duration(milliseconds: 500), () async {
-        Size size = MediaQuery.of(context).size;
         getdataList.isEmpty
-            ? SizedBox(
-                width: size.width,
-                height: size.height,
-              )
+            ? runApp(const MaterialApp(
+                home: SelectPetTypePage(),
+              ))
             : setState(() {
                 circleBool = false;
                 Navigator.pushReplacement(
-                    context,
-                    PageTransition(
-                        type: PageTransitionType.fade,
-                        child: const MyPetsPage(),
-                        duration: const Duration(milliseconds: 1250)));
+                  context,
+                  PageTransition(
+                    type: PageTransitionType.fade,
+                    child: const MyPetsPage(),
+                    duration: const Duration(milliseconds: 1250),
+                  ),
+                );
               });
       });
     }
